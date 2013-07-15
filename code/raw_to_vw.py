@@ -1,6 +1,8 @@
 #!/usr/bin/python
 '''
 Convert original dataset to Vowpal Wabbit format
+
+code modified from original: https://github.com/zygmuntz/phraug
 '''
 
 import sys,csv
