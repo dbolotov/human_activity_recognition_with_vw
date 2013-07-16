@@ -83,4 +83,5 @@ avg / total       0.95      0.95      0.95     49675
 
 ####Technical findings
 - vw csoaa: will output an additional line in the output prediction file. Ran prediction with labeled examples, and this line did not have an example label.
-- vw csoaa: try removing class costs from testing file. Prediction is 100% accurate, not sure if this is because the test examples are labeled.
+- vw csoaa: try removing class costs from testing file. Prediction is 100% accurate, not sure if this is because the test examples are labeled. If labels are removed, result is same as when running model with -t option. Seems that csoaa results in perfect prediction.
+- vw csoaa: not using any costs with this option will result in 100% accuracy on test set.
