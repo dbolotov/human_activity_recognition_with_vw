@@ -18,15 +18,15 @@ def main(in_file, out_file, format):
     label_map = {'sitting':1, 'sittingdown': 2, 'standing': 3, 'standingup': 4, 'walking': 5}
 
 
-    if format = 'vw': #convert to vw format
-        headers = reader.next() #skip headers
+    if format == 'vw': #convert to vw format
+        header = reader.next() #skip header
 
         for line in reader: 
             line = line[6:] #skip the 'user' feature
-        	new_line = []
+            new_line = []
 
-        	label = label_map[line[-1]]
-        	new_line.append("%s " % label)
+            label = label_map[line[-1]]
+            new_line.append("%s " % label)
 
             for n in namespaces:
                 item = line.pop( 0 )
@@ -38,21 +38,33 @@ def main(in_file, out_file, format):
             # print new_line
             writer.write(new_line)
 
-    elif format = 'mrmr': #convert to mrmr format
+    elif format == 'mrmr': #convert to mrmr format
+        names = reader.next()
+
+        header = [names[-1]] + names[:-1]
+        # print header
+        # print type(header)
+        header = ",".join(header)
+        header += "\n"
+
+        writer.write(header)
+
+        # sys.exit()
         for line in reader:
             new_line = []
+            # print line
 
             label = label_map[line[-1]]
-            new_line.append("%s " % label)
+            new_line.append("%s" % label)
 
-            for n in len(line[:-1])
+            for n in line[:-1]:
                 new_line.append(n)
 
             new_line = ",".join(new_line)
             new_line += "\n"
-            print new_line
-
+            # print new_line
+            writer.write(new_line)
 
 
 if __name__=='__main__':
-    sys.exit(main(sys.argv[1],sys.argv[2]))
+    sys.exit(main(sys.argv[1],sys.argv[2], sys.argv[3]))
