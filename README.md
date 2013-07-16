@@ -1,4 +1,4 @@
-####Human Activity Recognition
+####Human Activity Recognition with Vowpal Wabbit
 
 Project folder for human activity recognition project
 
@@ -18,17 +18,14 @@ Example of applying Vowpal Wabbit to accelerometer data
 - describe vw
 - scikit-learn
 
-- describe data processing: removing bad line, omitting 'user', vw namespaces
+- describe data processing: removing bad line, vw namespaces
 - describe evaluation strategy
 
-####Usage
+####Usage and output example
 ```bash
 python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw vw #convert data to vw format
 python vw_main_train.py #split data into training and test set, build model, evaluate on test set
-```
 
-####Expected output
-```
 Executing: vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k --oaa 5 -l 0.05 --passes 40 --quiet
 
 Model Evaluation:
@@ -41,11 +38,10 @@ confusion matrix:
  [   35   148   117  2879   545]
  [    4    25    98    56 12769]]
 
-
 ```
 
 ####Findings
-adding gender actually confuses the classifier
+
 
 ####Links
 - [Original data source and publication](http://groupware.les.inf.puc-rio.br/har)
@@ -64,6 +60,7 @@ adding gender actually confuses the classifier
 
 
 ####TODO
+- [ ] use perf for evaluation?
 - [x] vw - write python script to convert .csv to .vw format
 - [ ] compare to benchmark in original study
 - [ ] create plots of performance metrics, etc (use skl)
