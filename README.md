@@ -22,8 +22,24 @@ Example of applying Vowpal Wabbit to accelerometer data
 - describe evaluation strategy
 
 ####Usage
-python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw vw #convert data to vw format, omitting 'user' feature
+'''bash
+python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw vw #convert data to vw format
+python vw_main_train.py #split data into training and test set, build model, evaluate on test set
+'''
 
+####Expected output
+'''
+Model Evaluation:
+
+accuracy:       0.95006
+confusion matrix:
+[[15055    17     0    29     3]
+ [   29  2630    93   612   149]
+ [    0     7 13861    97   417]
+ [   35   148   117  2879   545]
+ [    4    25    98    56 12769]]
+
+'''
 
 ####Findings
 adding gender actually confuses the classifier
