@@ -22,12 +22,15 @@ def main(in_file, out_file, format):
     if format == 'vw': #convert to vw format
         header = reader.next() #skip header
 
+        counter = 1
         for line in reader: 
             line = line[0:] #use [1:] to omit the 'user' features
             new_line = []
 
             label = label_map[line[-1]]
-            new_line.append("%s " % label)
+            # new_line.append("%s " % label)
+            new_line.append("%s " % label) #add label to example
+            
 
             for n in namespaces:
                 item = line.pop( 0 )
@@ -35,12 +38,17 @@ def main(in_file, out_file, format):
                     new_item = "|%s _%s" % ( n, item ) #add underscore for hashing categorical features
                 else:
                     new_item = "|%s %s" % ( n, item )
+                # if n == 'b1':
+                #     new_item = "example_%s|%s _%s" % ( counter, n, item ) #add example number
+                # else:
+                #     new_item = "|%s %s" % ( n, item )                
                 new_line.append(new_item)
 
             new_line = " ".join(new_line)
             new_line += "\n"
             # print new_line
             writer.write(new_line)
+            counter += 1
 
     elif format == 'mrmr': #convert to mrmr format
         names = reader.next()
