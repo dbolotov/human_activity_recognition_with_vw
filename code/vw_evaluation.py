@@ -15,11 +15,16 @@ def main(y_pred_file,y_true_file):
     ## Create list for predicted class
     lines = [line.strip() for line in open(y_pred_file)]
     y_pred = [float(item) for item in lines]
+    y_pred = y_pred[:-1] #remove last line if using csoaa
 
     ## Create list for true class
     lines = [line.strip() for line in open(y_true_file)]
     y_true = [float(item[0]) for item in lines]
     
+    print len(y_true)
+    print len(y_pred)
+    print set(y_pred)
+    # sys.exit()
     ## Define labels for classes
     target_names = ['sitting', 'sittingdown', 'standing', 'standingup', 'walking']
     ## Evaluation
