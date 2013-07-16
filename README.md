@@ -18,7 +18,7 @@ Example of applying Vowpal Wabbit to accelerometer data
 - describe vw
 - scikit-learn
 
-- describe data processing: omitting 'user', vw namespaces
+- describe data processing: removing bad line, omitting 'user', vw namespaces
 - describe evaluation strategy
 
 ####Usage
