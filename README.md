@@ -10,7 +10,7 @@ Example of applying Vowpal Wabbit to accelerometer data
 ####Data Description
 
 - include images
-
+- contains 1532 duplicate examples
 
 
 ####Approach
@@ -50,13 +50,15 @@ avg / total       0.95      0.95      0.95     49675
 ```
 
 ####Findings
-sitting down and standing up have the lowest F1 scores and the smallest amount of observations.
+- 'sittingdown' and 'standingup' have the lowest F1 scores and the smallest amount of observations.
+- adding importance weights to sittingdown and standingup classes decreases precision and recall for those classes
+
 
 ####Links
 - [Original data source and publication](http://groupware.les.inf.puc-rio.br/har)
 - [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki)
 - [Scikit-learn](http://scikit-learn.org/stable/)
-- [split.py and raw_to_format.py source](https://github.com/zygmuntz/phraug)
+- [original soruce for split.py and raw_to_format.py](https://github.com/zygmuntz/phraug)
 
 
 
@@ -69,12 +71,16 @@ sitting down and standing up have the lowest F1 scores and the smallest amount o
 
 
 ####TODO
-- [ ] build classification report with scikits http://scikit-learn.org/dev/modules/generated/sklearn.metrics.classification_report.html#sklearn.metrics.classification_report
-- [ ] use importance weighting for highly misclassified samples
-- [ ] use perf for evaluation?
+- [x] build classification report with scikits http://scikit-learn.org/dev/modules/generated/sklearn.metrics.classification_report.html#sklearn.metrics.classification_report
+- [x] use importance weighting for highly misclassified samples
+- [x] use cost for misclassified classes
 - [x] vw - write python script to convert .csv to .vw format
 - [ ] compare to benchmark in original study
 - [ ] create plots of performance metrics, etc 
 - [ ] look at data and create histogram of class distribution (use Excel)
 - [ ] create hist/plots of data distribution (age, outliers, etc)
 - [ ] skl - use feature scaling
+
+####Technical findings
+- vw csoaa: will output an additional line in the output prediction file. Ran prediction with labeled examples, and this line did not have an example label.
+- vw csoaa: try removing class costs from testing file. Prediction is 100% accurate, not sure if this is because the test examples are labeled.
