@@ -50,7 +50,7 @@ avg / total       0.95      0.95      0.95     49675
 ```
 
 ####Findings
-sitting down and standing up have the lowest F1 scores and the smallest amount of observations
+sitting down and standing up have the lowest F1 scores and the smallest amount of observations.
 
 ####Links
 - [Original data source and publication](http://groupware.les.inf.puc-rio.br/har)
