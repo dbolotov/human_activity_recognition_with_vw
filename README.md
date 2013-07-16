@@ -29,6 +29,8 @@ python vw_main_train.py #split data into training and test set, build model, eva
 
 ####Expected output
 ```
+Executing: vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k --oaa 5 -l 0.05 --passes 40 --quiet
+
 Model Evaluation:
 
 accuracy:       0.95006
@@ -38,6 +40,7 @@ confusion matrix:
  [    0     7 13861    97   417]
  [   35   148   117  2879   545]
  [    4    25    98    56 12769]]
+
 
 ```
 
