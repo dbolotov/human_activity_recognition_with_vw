@@ -32,8 +32,8 @@ def main(input_file, output_file1, output_file2, P = 0.7, seed = 'randy'):
     		writer1.writerow( line )
     	
     	counter += 1
-    	if counter % 100000 == 0:
-    		print counter
+    	# if counter % 100000 == 0:
+    	# 	print counter
     
 
 if __name__=='__main__':
