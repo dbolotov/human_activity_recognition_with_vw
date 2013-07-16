@@ -13,7 +13,8 @@ def main(in_file, out_file, format):
     reader = csv.reader(open(in_file), delimiter=";")
     writer = open(out_file,'w')
 
-    namespaces = ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12']
+    # namespaces = ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12','f13','f14','f15','f16','f17']
+    namespaces = ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12','f13']
 
     label_map = {'sitting':1, 'sittingdown': 2, 'standing': 3, 'standingup': 4, 'walking': 5}
 
@@ -22,7 +23,7 @@ def main(in_file, out_file, format):
         header = reader.next() #skip header
 
         for line in reader: 
-            line = line[6:] #skip the 'user' feature
+            line = line[5:] #skip the 'user', 'gender', 'how_tall', 'weight', 'body_mass_index' features
             new_line = []
 
             label = label_map[line[-1]]
