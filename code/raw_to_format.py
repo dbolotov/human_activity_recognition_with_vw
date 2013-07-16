@@ -13,8 +13,8 @@ def main(in_file, out_file, format):
     reader = csv.reader(open(in_file), delimiter=";")
     writer = open(out_file,'w')
 
-    # namespaces = ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12','f13','f14','f15','f16','f17']
-    namespaces = ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12','f13']
+    namespaces = ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12','f13','f14','f15','f16','f17']
+    # namespaces = ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12','f13']
 
     label_map = {'sitting':1, 'sittingdown': 2, 'standing': 3, 'standingup': 4, 'walking': 5}
 
@@ -23,7 +23,7 @@ def main(in_file, out_file, format):
         header = reader.next() #skip header
 
         for line in reader: 
-            line = line[5:] #skip the 'user', 'gender', 'how_tall', 'weight', 'body_mass_index' features
+            line = line[1:] #skip the 'user' feature
             new_line = []
 
             label = label_map[line[-1]]
@@ -31,7 +31,10 @@ def main(in_file, out_file, format):
 
             for n in namespaces:
                 item = line.pop( 0 )
-                new_item = "|%s %s" % ( n, item )
+                if item == 'Woman' or new_item == 'Man':
+                    new_item = "|%s _%s" % ( n, item ) #add underscore for hashing
+                else:
+                    new_item = "|%s %s" % ( n, item )
                 new_line.append(new_item)
 
             new_line = " ".join(new_line)
@@ -43,14 +46,10 @@ def main(in_file, out_file, format):
         names = reader.next()
 
         header = [names[-1]] + names[:-1]
-        # print header
-        # print type(header)
         header = ",".join(header)
         header += "\n"
 
         writer.write(header)
-
-        # sys.exit()
         for line in reader:
             new_line = []
             # print line
