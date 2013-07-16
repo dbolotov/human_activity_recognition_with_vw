@@ -1,8 +1,9 @@
 '''
-split a file into two randomly, line by line. 
+Split a file into two randomly, line by line.
+
 Usage: split.py <input file> <output file 1> <output file 2> [<probability of writing to the first file>] [<random seed>]'
 
-https://github.com/zygmuntz/nonlinear-vowpal-wabbit/blob/master/split.py
+Code from: https://github.com/zygmuntz/phraug
 
 '''
 
@@ -20,10 +21,6 @@ def main(input_file, output_file1, output_file2, P = 0.7, seed = 'randy'):
     reader = csv.reader( i )
     writer1 = csv.writer( o1 )
     writer2 = csv.writer( o2 )
-    
-    #headers = reader.next()
-    #writer1.writerow( headers )
-    #writer2.writerow( headers )
     
     counter = 0
     
