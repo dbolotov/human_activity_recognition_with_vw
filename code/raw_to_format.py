@@ -32,7 +32,7 @@ def main(in_file, out_file, format):
             for n in namespaces:
                 item = line.pop( 0 )
                 if n == 'b1' or n == 'b2':
-                    new_item = "|%s _%s" % ( n, item ) #add underscore for hashing gender feature
+                    new_item = "|%s _%s" % ( n, item ) #add underscore for hashing categorical features
                 else:
                     new_item = "|%s %s" % ( n, item )
                 new_line.append(new_item)
