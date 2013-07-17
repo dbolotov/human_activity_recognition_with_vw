@@ -3,6 +3,7 @@
 
 ###Description
 Recognizing human activities from body and accelerometer data, using the Vowpal Wabbit machine learning system.
+This is a descriptive study, with code and detailed processing steps.
 
 
 ###Data
@@ -17,9 +18,23 @@ A detailed description is available in links section.
 This study uses Vowpal Wabbit to learn and predict activities. Modules from the scikit-learn library are used to evaluate performance.
 
 
+###Datapre-processing
 
-- describe data processing: removing bad line, vw namespaces
-- describe evaluation strategy
+A timestamp was removed from row 122078.
+
+For initial experiments, the data was converted to vw format using a different namespace for the body and accelerometer features. The 'user' feature was omitted:
+
+```
+#header and one observation in original format:
+user;gender;age;how_tall_in_meters;weight;body_mass_index;x1;y1;z1;x2;y2;z2;x3;y3;z3;x4;y4;z4;class
+debora;Woman;46;1.62;75;28.6;-3;92;-63;-23;18;-19;5;104;-92;-150;-103;-147;sitting
+
+#same observation in vw format (with 'user' omitted):
+1  |b1 Woman |b2 46 |b3 1.62 |b4 75 |b5 28.6 |a6 -3 |a7 92 |a8 -63 |a9 -23 |a10 18 |a11 -19 |a12 5 |a13 104 |a14 -92 |a15 -150 |a16 -103 |a17 -147
+```
+
+VW allows inclusion of quadratic and cubic feature interactions. For the namespace above, all quadratic interactions between accelerometer features could be specified with -q aa.
+
 
 ###Training and testing
 
@@ -42,22 +57,22 @@ python vw_main_train.py #split data into training and test set, build model, eva
 Executing: vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k --oaa 5 --bfgs --loss_function logistic --passes 30 --quiet
 
 Evaluate on training set:
-accuracy:       0.97658
+accuracy:       0.97623
 confusion matrix:
-[[40280     3     0    23     0]
- [   31  8737   137   492    98]
- [    0    38 37334    98   267]
- [   38   485   378  8699   307]
- [    0   125   347   229 34027]]
+[[40457     3     0    16     2]
+ [   42  8624   133   495   108]
+ [    0    39 37296   106   292]
+ [   40   474   389  8737   322]
+ [    0   118   340   223 33917]]
 
 Evaluate on test set:
-accuracy:       0.96449
+accuracy:       0.96273
 confusion matrix:
-[[10301     9     1    10     4]
- [   21  2067    37   164    43]
- [    1    18  9487    31    96]
- [   19   203   104  2022   160]
- [    2    41   124   100  8395]]
+[[10119     7     1    21     5]
+ [   27  2113    54   176    55]
+ [    0    12  9473    47   105]
+ [   25   189    95  1992   152]
+ [    4    57   131    84  8516]]
 ```
 
 ####Findings
