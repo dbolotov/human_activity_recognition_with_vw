@@ -52,7 +52,8 @@ avg / total       0.95      0.95      0.95     49675
 ####Findings
 - 'sittingdown' and 'standingup' have the lowest F1 scores and the smallest amount of observations.
 - adding importance weights to sittingdown and standingup classes decreases precision and recall for those classes
-
+- using --bfgs increases accuracy by .03. Why?
+- random sort of rows (with sort -R <filename>) increases accuracy by 0.001
 
 ####Links
 - [Original data source and publication](http://groupware.les.inf.puc-rio.br/har)
