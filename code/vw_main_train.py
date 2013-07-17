@@ -17,7 +17,7 @@ split.main('../data/working/dataset_rand.vw','../data/working/train.vw','../data
 # model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k --oaa 5 -l 0.05 --passes 30 --quiet"
 
 ## csoaa
-model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model --oaa 5 -l 0.05 --passes 40 -c -k --bfgs --loss_function logistic"
+model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k --oaa 5 --bfgs --loss_function logistic -l 0.05 --passes 40"
 
 
 print 'Executing:', model_cmd
