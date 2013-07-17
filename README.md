@@ -21,9 +21,9 @@ The steps taken here are:
 
 1. Look at the data. Check the types of values, ranges, etc., and if there are any quality issues.
 
-2. Convert the original data file to vw format (`raw_to_format.py`) and randomly order observations.
+2. Convert the original data file to vw format and randomly order observations.
 
-3. Perform training and prediction with vw (`vw_main_train.py`).
+3. Perform training and prediction with vw.
 
 4. Change algorithm, parameters, etc. based on performance.
 
@@ -32,7 +32,7 @@ The steps taken here are:
 
 A timestamp was removed from row 122078.
 
-For initial experiments, the data was converted to vw format using a different namespace for the body and accelerometer features. The 'user' feature was omitted. The original dataset has observations sorted by class; the vw-formatted dataset was randomized using `sort -R dataset.vw`.
+For initial experiments, the data was converted to vw format using a different namespace for the body and accelerometer features. The 'user' feature was omitted. The original dataset has observations sorted by class; the vw-formatted dataset was randomized before proceeding.
 
 The original and vw formats for one observation are shown below:
 ```
@@ -44,12 +44,12 @@ debora;Woman;46;1.62;75;28.6;-3;92;-63;-23;18;-19;5;104;-92;-150;-103;-147;sitti
 1  |b1 Woman |b2 46 |b3 1.62 |b4 75 |b5 28.6 |a6 -3 |a7 92 |a8 -63 |a9 -23 |a10 18 |a11 -19 |a12 5 |a13 104 |a14 -92 |a15 -150 |a16 -103 |a17 -147
 ```
 
-VW allows inclusion of quadratic and cubic feature interactions. For the namespace above, all quadratic interactions between accelerometer features could be specified with `-q aa`.
+VW allows inclusion of quadratic and cubic feature interactions. For the namespace above, quadratic interactions between all accelerometer features could be specified with `-q aa`.
 
 
 ###Training and testing
 
-Data is split into training and test sets, and the model is built using the training data. VW models are built using the multiclass option with a logistic loss function. Performance is evaluated using classification accuracy and confusion matrices. Using both training and test sets allows to get a sense of bias/variance and how well the algorithm generalizes.
+Data is split into training and test sets, and the model is built using the training data. Performance is evaluated using classification accuracy and confusion matrices. Using both training and test sets allows to get a sense of bias/variance and how well the algorithm generalizes.
 
 - average loss plot
 - accuracy vs training examples plot
@@ -101,21 +101,15 @@ confusion matrix:
 
 
 
-####Links
+###Links
 - [Original data source and publication](http://groupware.les.inf.puc-rio.br/har)
 - [Detailed data description](http://archive.ics.uci.edu/ml/datasets/Wearable+Computing%3A+Classification+of+Body+Postures+and+Movements+%28PUC-Rio%29)
 - [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki)
 - [Scikit-learn](http://scikit-learn.org/stable/)
-- [original soruce for split.py and raw_to_format.py](https://github.com/zygmuntz/phraug)
+- [Original source for split.py and raw_to_format.py](https://github.com/zygmuntz/phraug)
+- [Machine learning experiment organization](http://arkitus.com/PRML/)
 
 
-
-####Put the following in a separate file:
-
-####Goals
-- [ ] Do case study: machine learning classification task
-- [ ] Follow patterns for machine learning points: http://arkitus.com/PRML/
-- [ ] Eventually move project to Github 
 
 
 ####TODO
