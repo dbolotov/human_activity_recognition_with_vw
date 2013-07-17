@@ -1,8 +1,10 @@
 ####Human Activity Recognition with Vowpal Wabbit
 
-Project folder for human activity recognition project
-
-Original data and publication: http://groupware.les.inf.puc-rio.br/har
+#####Five pound
+####Four pound
+###Three pound
+##Two pound
+#One poun
 
 ####Description
 Example of applying Vowpal Wabbit to accelerometer data
@@ -20,6 +22,13 @@ Example of applying Vowpal Wabbit to accelerometer data
 
 - describe data processing: removing bad line, vw namespaces
 - describe evaluation strategy
+
+####Training and testing
+
+- average loss plot
+- accuracy vs training examples plot
+- accuracy vs passes plot
+
 
 ####Usage and output example
 ```bash

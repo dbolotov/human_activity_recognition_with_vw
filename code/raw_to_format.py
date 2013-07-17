@@ -1,8 +1,8 @@
 #!/usr/bin/python
 '''
-Convert original dataset to Vowpal Wabbit format
+Convert original dataset to Vowpal Wabbit or mRMR format.
 
-code modified from original: https://github.com/zygmuntz/phraug
+Code modified from original: https://github.com/zygmuntz/phraug
 '''
 
 import sys,csv
@@ -25,26 +25,27 @@ def main(in_file, out_file, format):
 
         counter = 1
         for line in reader: 
-            # line = line[15:] #use [2:] to omit the 'user' and 'gender' features
+            # line = [2:]#use [2:] to omit the 'user' and 'gender' features
             new_line = []
 
             label = label_map[line[-1]]
-            # new_line.append("%s " % label)
-            new_line.append("%s " % label) #add label to example
+            new_line.append("%s " % label)
             
 
             for n in namespaces:
                 item = line.pop( 0 )
                 new_item = "|%s %s" % ( n, item )
+                
+                ## Uncomment section to add example number
                 # if n == 'b1':
-                #     new_item = "example_%s|%s _%s" % ( counter, n, item ) #add example number
+                #     new_item = "example_%s|%s %s" % ( counter, n, item )
                 # else:
-                #     new_item = "|%s %s" % ( n, item )                
+                #     new_item = "|%s %s" % ( n, item )  
+
                 new_line.append(new_item)
 
             new_line = " ".join(new_line)
             new_line += "\n"
-            # print new_line
             writer.write(new_line)
             counter += 1
 
@@ -58,7 +59,6 @@ def main(in_file, out_file, format):
         writer.write(header)
         for line in reader:
             new_line = []
-            # print line
 
             label = label_map[line[-1]]
             new_line.append("%s" % label)
@@ -68,7 +68,6 @@ def main(in_file, out_file, format):
 
             new_line = ",".join(new_line)
             new_line += "\n"
-            # print new_line
             writer.write(new_line)
 
 
