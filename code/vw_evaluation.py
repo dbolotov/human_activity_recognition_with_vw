@@ -21,10 +21,7 @@ def main(y_pred_file,y_true_file):
     lines = [line.strip() for line in open(y_true_file)]
     y_true = [float(item[0]) for item in lines]
     
-    print len(y_true)
-    print len(y_pred)
-    print set(y_pred)
-    # sys.exit()
+
     ## Define labels for classes
     target_names = ['sitting', 'sittingdown', 'standing', 'standingup', 'walking']
     ## Evaluation
