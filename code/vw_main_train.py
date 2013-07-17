@@ -10,7 +10,7 @@ import split,vw_evaluation
 ## Split into training and test sets
 # split.main('../data/working/dataset.vw','../data/working/train.vw','../data/working/test.vw', 0.7, 'rand')
 
-split.main('../data/working/dataset.vw','../data/working/train.vw','../data/working/test.vw', 0.7, 'rand')
+split.main('../data/working/dataset.vw','../data/working/train.vw','../data/working/test.vw', 0.7, 'randy')
 
 
 ## Train vw model using train set (run as system cmd from python), save into file
@@ -23,8 +23,14 @@ model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model --oaa 5 -
 print 'Executing:', model_cmd
 os.system(model_cmd) 
 
-## Predict using vw model and test set, save into file
+## Predict using vw model and train and test sets, save into file
+os.system("vw -i ../data/output/vw.model --testonly -d ../data/working/train.vw -p ../data/working/train_pred.txt --quiet")
 os.system("vw -i ../data/output/vw.model --testonly -d ../data/working/test.vw -p ../data/working/test_pred.txt --quiet")
 
-## Evaluate results of test set prediction
+
+
+## Evaluate results
+print 'Evaluate on training set:'
+vw_evaluation.main('../data/working/train_pred.txt','../data/working/train.vw')
+print 'Evaluate on test set:'
 vw_evaluation.main('../data/working/test_pred.txt','../data/working/test.vw')
