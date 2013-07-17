@@ -10,14 +10,14 @@ import split,vw_evaluation
 ## Split into training and test sets
 # split.main('../data/working/dataset.vw','../data/working/train.vw','../data/working/test.vw', 0.7, 'rand')
 
-split.main('../data/working/dataset.vw','../data/working/train.vw','../data/working/test.vw', 0.7, 'randy')
+split.main('../data/working/dataset_rand.vw','../data/working/train.vw','../data/working/test.vw', 0.8, 'randy')
 
 
 ## Train vw model using train set (run as system cmd from python), save into file
 # model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k --oaa 5 -l 0.05 --passes 30 --quiet"
 
 ## csoaa
-model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model --oaa 5 -l 0.05 --passes 30 -c -k"
+model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model --oaa 5 -l 0.05 --passes 40 -c -k --bfgs --loss_function logistic"
 
 
 print 'Executing:', model_cmd

@@ -8,7 +8,7 @@ Usage: vw_evaluation.py <predicted_classes> <true_classes>
 
 import sys,csv
 import numpy as np
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, precision_score, recall_score, f1_score
 
 def main(y_pred_file,y_true_file):
 
@@ -28,10 +28,16 @@ def main(y_pred_file,y_true_file):
     acc = accuracy_score(y_true, y_pred)
     cm = confusion_matrix(y_true,y_pred)
     cr = classification_report(y_true,y_pred,target_names=target_names)
+    # prec = precision_score(y_true,y_pred, pos_label=-1)
+    # recall = recall_score(y_true,y_pred, pos_label=-1)
+    # f1 = f1_score(y_true,y_pred, pos_label=-1)
+
 
     ## Print results
-    print '\nModel Evaluation:\n'
     print '%-10s %12.5f' % ('accuracy:',acc)
+    # print '%-10s %12.5f' % ('prec:',prec)
+    # print '%-10s %12.5f' % ('recall:',recall)   
+    # print '%-10s %12.5f' % ('f1:',f1)   
     print 'confusion matrix:'
     print cm
     print cr
