@@ -3,7 +3,7 @@
 
 ###Description
 Recognizing human activities from body and accelerometer data, using the Vowpal Wabbit machine learning system.
-This is a descriptive study, with code and detailed processing steps.
+This is a descriptive study, with code and some detail for data processing, model building, and performance evaluation.
 
 
 ###Data
@@ -15,14 +15,20 @@ A detailed description is available in links section.
 
 ###Approach
 
-This study uses Vowpal Wabbit to learn and predict activities. Modules from the scikit-learn library are used to evaluate performance.
+This study uses Vowpal Wabbit to learn and predict activities. Modules from the scikit-learn library are used to evaluate performance. 
+
+The steps taken here are:
+[1] Look at the data. Check the types of values, and if there are any quality issues (using Excel, CLI, or any other tool).
+[2] Convert the original data file to vw format (`raw_to_format.py`) and randomly order observations.
+[3] Perform training and prediction with vw (`vw_main_train.py`).
+[4] Change algorithm, parameters, etc. based on performance.
 
 
-###Datapre-processing
+###Data pre-processing
 
 A timestamp was removed from row 122078.
 
-For initial experiments, the data was converted to vw format using a different namespace for the body and accelerometer features. The 'user' feature was omitted:
+For initial experiments, the data was converted to vw format using a different namespace for the body and accelerometer features. The 'user' feature was omitted. The original dataset has observations sorted by class, so the order in vw dataset was randomized (using `sort -R dataset.vw`).
 
 ```
 #header and one observation in original format:
@@ -33,10 +39,17 @@ debora;Woman;46;1.62;75;28.6;-3;92;-63;-23;18;-19;5;104;-92;-150;-103;-147;sitti
 1  |b1 Woman |b2 46 |b3 1.62 |b4 75 |b5 28.6 |a6 -3 |a7 92 |a8 -63 |a9 -23 |a10 18 |a11 -19 |a12 5 |a13 104 |a14 -92 |a15 -150 |a16 -103 |a17 -147
 ```
 
-VW allows inclusion of quadratic and cubic feature interactions. For the namespace above, all quadratic interactions between accelerometer features could be specified with -q aa.
+VW allows inclusion of quadratic and cubic feature interactions. For the namespace above, all quadratic interactions between accelerometer features could be specified with `-q aa`.
 
 
 ###Training and testing
+
+This procedure takes the following steps:
+[1] Split data into training and test sets
+[2] Train model using training set
+[3] Evaluate model using training and test sets. Classification accuracy and confusion matrices were used to check performance.
+
+Evaluating on both training and test sets allows to get a sense of how well the algorithm generalizes.
 
 - average loss plot
 - accuracy vs training examples plot
@@ -45,6 +58,10 @@ VW allows inclusion of quadratic and cubic feature interactions. For the namespa
 
 
 ###Findings
+
+- Results
+- Further improvement: use k-fold cross-validation to get a better sense of errors.
+
 
 ###Usage and output example
 ```bash
