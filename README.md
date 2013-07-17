@@ -2,24 +2,23 @@
 
 
 ###Description
-* This is a descriptive study on recognizing human activities from body and accelerometer data, using the Vowpal Wabbit machine learning system.
-* Code and some detail for data processing, model building, and performance evaluation is included.
+
+* This is a descriptive study on classifying human activities using body and accelerometer data.
+* The project uses Vowpal Wabbit, python, and some linux command line utilities.
+* Code and some detail for data processing, learning, and performance evaluation is included.
 
 
 ###Data
 
-The dataset consists of 165633 observations. Each observation contains one of 5 types of activities, performed by 4 human subjects: sitting down, standing up, standing, walking, and sitting. Information about the user and readings from 4 accelerometers are used as features in the learning algorithm.
+The dataset is taken from [Wearable Computing: Accelerometers' Data Classification of Body Postures and Movements](http://archive.ics.uci.edu/ml/datasets/Wearable+Computing%3A+Classification+of+Body+Postures+and+Movements+%28PUC-Rio%29). It consists of 165633 observations. Each observation contains one of 5 types of activities, performed by human subjects: sitting down, standing up, standing, walking, and sitting. Information about the user and readings from 4 accelerometers are used as features in the learning algorithm.
 
-A detailed description and is available in links section.
-
+See links for detailed description.
 
 ###Approach
 
-This study uses Vowpal Wabbit to learn and predict activities. Modules from the scikit-learn library are used to evaluate performance. 
+This is a multi-class classification problem. The approach consists of these steps:
 
-The steps taken here are:
-
-1. Look at the data. Check the types of values, ranges, etc., and if there are any quality issues.
+1. 'Look' at the data. Check the types of values, ranges, etc., and if there are any quality issues.
 
 2. Convert the original data file to vw format and randomly order observations.
 
@@ -28,11 +27,18 @@ The steps taken here are:
 4. Change algorithm, parameters, etc. based on performance.
 
 
+This study uses Vowpal Wabbit to build the prediction model. VW produces good results fast.   
+
+Modules from the scikit-learn python library are used to evaluate performance. The training, testing and evaluation steps are performed from a python script. All code was run on linux. 
+
+
+
+
 ###Data pre-processing
 
-A timestamp was removed from row 122078.
+A timestamp was removed from row 122078 in the original .csv file.
 
-For initial experiments, the data was converted to vw format using a different namespace for the body and accelerometer features. The 'user' feature was omitted. The original dataset has observations sorted by class; the vw-formatted dataset was randomized before proceeding.
+Data was converted to vw format using a different namespace for the body and accelerometer features. The 'user' feature was omitted. The original dataset has observations sorted by class; the vw-formatted dataset was randomized.
 
 The original and vw formats for one observation are shown below:
 ```
@@ -49,11 +55,16 @@ VW allows inclusion of quadratic and cubic feature interactions. For the namespa
 
 ###Training and testing
 
-Data is split into training and test sets, and the model is built using the training data. Performance is evaluated using classification accuracy and confusion matrices. Using both training and test sets allows to get a sense of bias/variance and how well the algorithm generalizes.
+Data was split into training and test sets, and the model was built using the training data. Performance was evaluated using classification accuracy and confusion matrices. Using both training and test sets allows to get a sense of bias/variance and how well the algorithm generalizes.
+
+The following plots were made using an 80/20 training/test split, omitting 'user' and 'gender' features, and using the following vw command pattern: `vw -d <input> -f <output> -c --oaa 5 --bfgs --loss_function logistic --passes <n>`.
+The learning curves (accuracy vs num examples plot) were made by training on an increasing number of observations and computing test error on the same test set.
 
 - average loss plot
 - accuracy vs training examples plot
 - accuracy vs passes plot
+
+
 
 
 ###Findings
