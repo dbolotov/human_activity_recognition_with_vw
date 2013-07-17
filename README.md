@@ -20,9 +20,9 @@ This is a multi-class classification problem. The approach consists of these ste
 
 1. 'Look' at the data. Check the types of values, ranges, etc., and if there are any quality issues.
 
-2. Convert the original data file to vw format and randomly order observations.
+2. Preprocess the data into appropriate format and condition.
 
-3. Perform training and prediction with vw.
+3. Perform training and testing.
 
 4. Change algorithm, parameters, etc. based on performance.
 
