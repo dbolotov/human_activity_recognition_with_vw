@@ -13,7 +13,8 @@ def main(in_file, out_file, format):
     reader = csv.reader(open(in_file), delimiter=";")
     writer = open(out_file,'w')
 
-    namespaces = ['b1','b2','b3','b4','b5','b6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17','a18']
+    # namespaces = ['b1','b2','b3','b4','b5','b6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17','a18'] #use all features
+    namespaces = ['b1','b2','b3','b4','b5','a6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17'] #omit 'gender'
     # namespaces = ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12','f13','f14','f15','f16'] #omit 'user' and 'gender'
     # namespaces = ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12'] #omit all but accel features
 
@@ -25,7 +26,7 @@ def main(in_file, out_file, format):
 
         counter = 1
         for line in reader: 
-            # line = [2:]#use [2:] to omit the 'user' and 'gender' features
+            line = line[1:]#use [2:] to omit the 'user' and 'gender' features
             new_line = []
 
             label = label_map[line[-1]]

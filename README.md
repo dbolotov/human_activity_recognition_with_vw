@@ -2,8 +2,8 @@
 
 
 ###Description
-Recognizing human activities from body and accelerometer data, using the Vowpal Wabbit machine learning system.
-This is a descriptive study, with code and some detail for data processing, model building, and performance evaluation.
+* Recognizing human activities from body and accelerometer data, using the Vowpal Wabbit machine learning system.
+* This is a descriptive study, with code and some detail for data processing, model building, and performance evaluation.
 
 
 ###Data
@@ -18,10 +18,10 @@ A detailed description is available in links section.
 This study uses Vowpal Wabbit to learn and predict activities. Modules from the scikit-learn library are used to evaluate performance. 
 
 The steps taken here are:
-[1] Look at the data. Check the types of values, and if there are any quality issues (using Excel, CLI, or any other tool).
-[2] Convert the original data file to vw format (`raw_to_format.py`) and randomly order observations.
-[3] Perform training and prediction with vw (`vw_main_train.py`).
-[4] Change algorithm, parameters, etc. based on performance.
+1. Look at the data. Check the types of values, and if there are any quality issues (using Excel, CLI, or any other tool).
+2. Convert the original data file to vw format (`raw_to_format.py`) and randomly order observations.
+3. Perform training and prediction with vw (`vw_main_train.py`).
+4. Change algorithm, parameters, etc. based on performance.
 
 
 ###Data pre-processing
@@ -44,23 +44,25 @@ VW allows inclusion of quadratic and cubic feature interactions. For the namespa
 
 ###Training and testing
 
-This procedure takes the following steps:
-[1] Split data into training and test sets
-[2] Train model using training set
-[3] Evaluate model using training and test sets. Classification accuracy and confusion matrices were used to check performance.
-
-Evaluating on both training and test sets allows to get a sense of how well the algorithm generalizes.
+Data is split into training and test sets, and the model is built using the training data. VW models are built using the multiclass option with a logistic loss function. Performance is evaluated using classification accuracy and confusion matrices. Using both training and test sets allows to get a sense of bias/variance and how well the algorithm generalizes.
 
 - average loss plot
 - accuracy vs training examples plot
 - accuracy vs passes plot
 
 
-
 ###Findings
 
-- Results
-- Further improvement: use k-fold cross-validation to get a better sense of errors.
+- It is possible to achieve a test accuracy of about 0.96 using the following specification: `vw -d <input> -f <output> -c --oaa 5 --bfgs --loss_function logistic --passes 30` 
+- 'sitting down' and 'standing up' have the lowest scores and the smallest amount of observations. More data for these activities is likely to help.
+- using vw's `--bfgs` increases accuracy by .03.
+- random sort of observations increases accuracy by 0.001.
+
+
+###Further improvement
+
+- Use k-fold cross-validation to get a better sense of errors.
+- Add importance weights to sittingdown and standingup to see how accuracy is affected.
 
 
 ###Usage and output example
@@ -92,11 +94,7 @@ confusion matrix:
  [    4    57   131    84  8516]]
 ```
 
-####Findings
-- 'sittingdown' and 'standingup' have the lowest F1 scores and the smallest amount of observations.
-- adding importance weights to sittingdown and standingup classes decreases precision and recall for those classes
-- using --bfgs increases accuracy by .03. Why?
-- random sort of rows (with sort -R <filename>) increases accuracy by 0.001
+
 
 ####Links
 - [Original data source and publication](http://groupware.les.inf.puc-rio.br/har)
