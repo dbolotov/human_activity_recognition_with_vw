@@ -2,15 +2,15 @@
 
 
 ###Description
-* Recognizing human activities from body and accelerometer data, using the Vowpal Wabbit machine learning system.
-* This is a descriptive study, with code and some detail for data processing, model building, and performance evaluation.
+* This is a descriptive study on recognizing human activities from body and accelerometer data, using the Vowpal Wabbit machine learning system.
+* Code and some detail for data processing, model building, and performance evaluation is included.
 
 
 ###Data
 
-The dataset consists of 165633 observations. Each observation contains one of 5 types of activities (sitting down, standing up, standing, walking, and sitting), performed by 4 human subjects. The features for each observation are information about the user and readings from 4 accelerometers.
+The dataset consists of 165633 observations. Each observation contains one of 5 types of activities, performed by 4 human subjects: sitting down, standing up, standing, walking, and sitting. Information about the user and readings from 4 accelerometers are used as features in the learning algorithm.
 
-A detailed description is available in links section.
+A detailed description and is available in links section.
 
 
 ###Approach
@@ -18,9 +18,13 @@ A detailed description is available in links section.
 This study uses Vowpal Wabbit to learn and predict activities. Modules from the scikit-learn library are used to evaluate performance. 
 
 The steps taken here are:
-1. Look at the data. Check the types of values, and if there are any quality issues (using Excel, CLI, or any other tool).
+
+1. Look at the data. Check the types of values, ranges, etc., and if there are any quality issues.
+
 2. Convert the original data file to vw format (`raw_to_format.py`) and randomly order observations.
+
 3. Perform training and prediction with vw (`vw_main_train.py`).
+
 4. Change algorithm, parameters, etc. based on performance.
 
 
@@ -28,8 +32,9 @@ The steps taken here are:
 
 A timestamp was removed from row 122078.
 
-For initial experiments, the data was converted to vw format using a different namespace for the body and accelerometer features. The 'user' feature was omitted. The original dataset has observations sorted by class, so the order in vw dataset was randomized (using `sort -R dataset.vw`).
+For initial experiments, the data was converted to vw format using a different namespace for the body and accelerometer features. The 'user' feature was omitted. The original dataset has observations sorted by class; the vw-formatted dataset was randomized using `sort -R dataset.vw`.
 
+The original and vw formats for one observation are shown below:
 ```
 #header and one observation in original format:
 user;gender;age;how_tall_in_meters;weight;body_mass_index;x1;y1;z1;x2;y2;z2;x3;y3;z3;x4;y4;z4;class
