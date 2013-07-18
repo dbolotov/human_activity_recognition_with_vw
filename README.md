@@ -5,12 +5,12 @@
 
 * This is a descriptive study on classifying human activities using data from wearable accelerometers.
 * The project uses Vowpal Wabbit, python, and linux command line utilities.
-* Code and some detail for data processing, learning, and performance evaluation is included.
+* Code and details for data processing, learning, and performance evaluation are included.
 
 
 ###Data
 
-The benchmark dataset is from research on human activity recognition, described [here](http://groupware.les.inf.puc-rio.br/har). Each of the 165633 observations contains one of 5 types of activities, performed by human subjects: sitting down, standing up, standing, walking, and sitting. Information about the user, and readings from 4 accelerometers worn by each subject, are available for each observation. Only the accelerometer features are used in building the model here. The process of extracting 12 features from from accelerometer readings is described in the [original paper](http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201).
+The benchmark dataset is from research on human activity recognition, described [here](http://groupware.les.inf.puc-rio.br/har). Each of the 165633 observations contains one of 5 types of activities, performed by human subjects: sitting down, standing up, standing, walking, and sitting. Information about the user, and readings from 4 accelerometers worn by each subject, are available for each observation. Only the accelerometer features are used in building the model here. The process of extracting 12 features from from accelerometer readings is described in the [original paper](http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201). The researchers report a classification accuracy of 99.14% on the entire dataset, for a method using decision trees and ensembles.
 
 
 ###Approach
@@ -33,7 +33,7 @@ This study uses Vowpal Wabbit to build the prediction model, because is fast, fu
 
 A timestamp was removed from row 122078 in the original .csv file. It was also found that the data contains 1352 duplicate rows; these were not removed.
 
-Data was converted to vw format, which included mapping class names to integer values. Only accelerometer features were retained.The original dataset has observations sorted by class; the vw-formatted dataset was randomized at this point.
+Data was converted to vw format, which included mapping class names to integer values. Only accelerometer features were retained.The original dataset has observations sorted by class; the vw-formatted dataset was randomized before proceeding.
 
 The header and one observation in original format look like this:
 ```
@@ -45,7 +45,7 @@ The same observation in vw format (only accelerometer features retained):
 1  |f1 -3 |f2 92 |f3 -63 |f4 -23 |f5 18 |f6 -19 |f7 5 |f8 104 |f9 -92 |f10 -150 |f11 -103 |f12 -147
 ```
 
-The f-<n> values are namespaces. Using this notation allows specifying non-linear interactions in VW commands. E.g., quadratic interactions between all features here can be specified with `-q ff`.
+The `f-1`...`f-2` namespace strings can be used to specify non-linear interactions in VW commands. E.g., quadratic interactions between all features here can be passed in with `-q ff`.
 
 
 ###Training and testing
@@ -99,7 +99,7 @@ confusion matrix:
 
 The left figure shows average training loss output from VW when using L-BFGS optimization and a logistic loss function. Test error was not decreasing significantly after the 30-passes mark. The learning curves plot (right figure) was made by training on an increasing number of observations (using 30 passes) and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value, which means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
 
-The features'sitting down' and 'standing up' have the highest errors and the smallest amount of observations. More data for these activities would likely increase overall accuracy.
+As in the original paper, the features'sitting down' and 'standing up' have the highest errors and the smallest amount of observations. More data for these activities would likely increase overall accuracy. 
 
 It is possible to achieve a test accuracy of about 0.95 using the following specification: 
 `vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes 30`. 
@@ -126,11 +126,3 @@ In a more thorough approach, some percentage of the data would be held out from 
 - [Vowpal Wabbit 7.3.0](https://github.com/JohnLangford/vowpal_wabbit)
 - [Python 2.7](http://www.python.org/download/releases/2.7/)
 - [scikits-learn 0.13.1](http://scikit-learn.org/stable/)
-
-
-
-###Technical findings
-- vw csoaa: will output an additional line in the output prediction file. Ran prediction with labeled examples, and this line did not have an example label.
-- vw csoaa: try removing class costs from testing file. Prediction is 100% accurate, not sure if this is because the test examples are labeled. If labels are removed, result is same as when running model with -t option. Seems that csoaa results in perfect prediction.
-- vw csoaa: not using any costs with this option will result in 100% accuracy on test set. Is this because the --testonly option does not work if csoaa is specified in the model?
-
