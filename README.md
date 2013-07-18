@@ -58,6 +58,10 @@ The learning curves (error vs num examples plot) were made by training on an inc
 - average loss plot
 - accuracy vs training examples plot
 - accuracy vs passes plot
+![Accuracy vs num passes][accuracy_vs_num_passes]: https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/accuracy_vs_num_passes.jpg "Accuracy vs num passes"
+
+
+[accuracy_vs_num_passes]: 
 
 
 ###Usage and output example
