@@ -33,14 +33,14 @@ This study uses Vowpal Wabbit to build the prediction model, because is fast, fu
 
 A timestamp was removed from row 122078 in the original .csv file.
 
-Data was converted to vw format and only accelerometer features were retained. The original dataset has observations sorted by class; the vw-formatted dataset was randomized at this point.
+Data was converted to vw format and only accelerometer features were retained. This included mapping class names to integer values. The original dataset has observations sorted by class; the vw-formatted dataset was randomized at this point.
 
 The header and one observation in original format looks like this:
 ```
 user;gender;age;how_tall_in_meters;weight;body_mass_index;x1;y1;z1;x2;y2;z2;x3;y3;z3;x4;y4;z4;class
 debora;Woman;46;1.62;75;28.6;-3;92;-63;-23;18;-19;5;104;-92;-150;-103;-147;sitting
 ```
-The same observation in vw format (with on accelerometer features retained):
+The same observation in vw format (only accelerometer features retained):
 ```
 1  |f1 -3 |f2 92 |f3 -63 |f4 -23 |f5 18 |f6 -19 |f7 5 |f8 104 |f9 -92 |f10 -150 |f11 -103 |f12 -147
 ```
