@@ -31,8 +31,8 @@ def main(y_pred_file,y_true_file):
 
     ## Print results
     print '%-10s %12.5f' % ('accuracy:',acc)
-    print 'confusion matrix:'
-    print cm
+    # print 'confusion matrix:'
+    # print cm
     # print cr
 
 if __name__=='__main__':
