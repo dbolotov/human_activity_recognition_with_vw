@@ -31,7 +31,7 @@ This study uses Vowpal Wabbit to build the prediction model, because is fast, fu
 
 ###Data pre-processing
 
-A timestamp was removed from row 122078 in the original .csv file. It was also noted that the data contains 1352 duplicate rows; these were not removed.
+A timestamp was removed from row 122078 in the original .csv file. It was also found that the data contains 1352 duplicate rows; these were not removed.
 
 Data was converted to vw format, which included mapping class names to integer values. Only accelerometer features were retained.The original dataset has observations sorted by class; the vw-formatted dataset was randomized at this point.
 
@@ -73,7 +73,7 @@ Random sorting of observations increases accuracy by 0.001.
 #convert data to vw format
 python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw vw 
 #randomize rows in dataset
-sort -R sort -R ../data/working/dataset.vw > ../data/working/dataset_rand.vw
+sort -R ../data/working/dataset.vw > ../data/working/dataset_rand.vw
 #split remaining data into training and test set, learn, and evaluate
 python vw_main_train.py 
 
