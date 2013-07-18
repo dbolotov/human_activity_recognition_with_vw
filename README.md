@@ -50,20 +50,7 @@ The same observation in vw format (only accelerometer features retained):
 
 Data was split into training and training sets, and the model was built using the training data. Performance was evaluated using classification accuracy and confusion matrices. Tracking both training and test errors allows to get a sense of bias/variance and how well the algorithm generalizes.
 
-The model was built using the 70/30 training/test split, using all accelerometer features with the following vw command pattern: 
-`vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes <n>`.
 
-The learning curves plot (right figure) was made by training on an increasing number of observations and computing test error on the same test set of 49928 examples.
-
-![Loss vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/loss_vs_num_passes.jpg "Loss vs num passes") ![Error vs num examples](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/error_vs_num_examples.jpg "Accuracy vs num examples")
-
-The learning curves show that test error decreases and both errors converge to a low value. This means that the algorithm is not suffering from very significant high-bias or high-variance problems.
-
-The features'sitting down' and 'standing up' have the highest errors and the smallest amount of observations. More data for these activities would likely increase overall accuracy.
-
-Using vw's `--bfgs` increases accuracy by .03.
-
-Random sorting of observations increases accuracy by 0.001.
 
 
 ###Usage and output example
@@ -104,9 +91,19 @@ confusion matrix:
 
 ###Findings
 
-- It is possible to achieve a test accuracy of about 0.95 using the following specification: `vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes 30`. 
+The model was built using the 70/30 training/test split, using all accelerometer features with the following vw command pattern: 
+`vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes <n>`.
 
-- In a more serious approach, some percentage of the data would be held out from training/testing and only used to report a final performance. Using k-fold cross-validation could also give a better sense of errors during training.
+![Loss vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/loss_vs_num_passes.jpg "Loss vs num passes") ![Error vs num examples](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/error_vs_num_examples.jpg "Accuracy vs num examples")
+
+
+The learning curves plot (right figure) was made by training on an increasing number of observations and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value. This means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
+
+The features'sitting down' and 'standing up' have the highest errors and the smallest amount of observations. More data for these activities would likely increase overall accuracy.
+
+It is possible to achieve a test accuracy of about 0.95 using the following specification: `vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes 30`. 
+
+In a more thorough approach, some percentage of the data would be held out from training/testing and only used to report a final performance. Using k-fold cross-validation could also give a better sense of errors during training.
 
 
 ###Further tasks
