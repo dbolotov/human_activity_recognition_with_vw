@@ -45,20 +45,21 @@ The same observation in vw format (only accelerometer features retained):
 1  |f1 -3 |f2 92 |f3 -63 |f4 -23 |f5 18 |f6 -19 |f7 5 |f8 104 |f9 -92 |f10 -150 |f11 -103 |f12 -147
 ```
 
-
 ###Training and testing
 
-Data was split into training and training sets, and the model was built using the training data. Performance was evaluated using classification accuracy and confusion matrices. Tracking both training and test errors allows to get a sense of bias/variance and how well the algorithm generalizes.
+Models were built using a 70/30 training/test split, using all accelerometer features, with the following vw command pattern: 
+`vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes <n>`.
 
-
+Performance was evaluated on both sets using classification accuracy and confusion matrices. Tracking both training and test errors allows to get a sense of bias/variance and how well the algorithm generalizes.
 
 
 ###Usage and output example
+
 ```bash
 ## commands:
 
 #convert data to vw format
-python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw vw 
+python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw 
 #randomize rows in dataset
 sort -R ../data/working/dataset.vw > ../data/working/dataset_rand.vw
 #split remaining data into training and test set, learn, and evaluate
@@ -88,31 +89,27 @@ confusion matrix:
 ```
 
 
-
 ###Findings
-
-The model was built using the 70/30 training/test split, using all accelerometer features with the following vw command pattern: 
-`vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes <n>`.
 
 ![Loss vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/loss_vs_num_passes.jpg "Loss vs num passes") ![Error vs num examples](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/error_vs_num_examples.jpg "Accuracy vs num examples")
 
 
-The learning curves plot (right figure) was made by training on an increasing number of observations and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value. This means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
+The left figure shows average training loss output from VW when using L-BFGS optimization and a logistic loss function. Test error was not decreasing significantly after the 30-passes mark. The learning curves plot (right figure) was made by training on an increasing number of observations (using 30 passes) and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value. This means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
 
 The features'sitting down' and 'standing up' have the highest errors and the smallest amount of observations. More data for these activities would likely increase overall accuracy.
 
-It is possible to achieve a test accuracy of about 0.95 using the following specification: `vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes 30`. 
+It is possible to achieve a test accuracy of about 0.95 using the following specification: 
+`vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes 30`. 
 
 In a more thorough approach, some percentage of the data would be held out from training/testing and only used to report a final performance. Using k-fold cross-validation could also give a better sense of errors during training.
 
 
 ###Further tasks
  
-- Add importance weights to sittingdown and standingup to see how accuracy is affected. Can be done with something like `sed -e 's/<class1> /<class1> <weight1>  /g' -e 's/<class2>  /<class2> <weight2>  /g' <inputfile> > <outputfile>`
+- Add importance weights to sittingdown and standingup to see how accuracy is affected. Can be done with something like `sed -e 's/<class1> /<class1> <weight1>  /g' <inputfile> > <outputfile>`
 - Try nonlinear options in vw
 - Try adjusting rank of inverse hessian approximation for bfgs option in vw
-
-
+- Separate data into 60.20.20 train/cross-validation/test split, and use cv set for tuning.
 
 
 ###Resources
@@ -129,15 +126,8 @@ In a more thorough approach, some percentage of the data would be held out from 
 
 
 ####TODO
-- [x] build classification report with scikits http://scikit-learn.org/dev/modules/generated/sklearn.metrics.classification_report.html#sklearn.metrics.classification_report
-- [x] use importance weighting for highly misclassified samples
-- [x] use cost for misclassified classes - this did not work, probably implemented wrong
-- [x] vw - write python script to convert .csv to .vw format
-- [x] read original paper for the dataset
 - [ ] compare to benchmark in original study
-- [x] create plots of performance metrics, etc 
-- [x] look at data and create histogram of class distribution (use Excel)
-- [ ] separate data into 60/20/20 train/cv/test split. Make learning curves with test/cv sets. Report final error with test set.
+
 
 ####Technical findings
 - vw csoaa: will output an additional line in the output prediction file. Ran prediction with labeled examples, and this line did not have an example label.
