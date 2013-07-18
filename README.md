@@ -56,6 +56,7 @@ The following plots were made using an 70/30 training/test split, using all acce
 The learning curves (error vs num examples plot) were made by training on an increasing number of observations and computing test error on the same held out test set of 49928 examples.
 
 ![Loss vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/loss_vs_num_passes.jpg "Loss vs num passes")
+
 ![Accuracy vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/accuracy_vs_num_passes.jpg "Accuracy vs num passes")
 
 ![Error vs num examples](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/error_vs_num_examples.jpg "Accuracy vs num examples")
