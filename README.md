@@ -55,14 +55,12 @@ Data was split into training and test sets, and the model was built using the tr
 The following plots were made using an 70/30 training/test split, using all accelerometer features with the following vw command pattern: `vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes <n>`.
 The learning curves (error vs num examples plot) were made by training on an increasing number of observations and computing test error on the same held out test set of 49928 examples.
 
-- average loss plot
-- accuracy vs training examples plot
-- accuracy vs passes plot
-
+![Loss vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/loss_vs_num_passes.jpg "Loss vs num passes")
 ![Accuracy vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/accuracy_vs_num_passes.jpg "Accuracy vs num passes")
 
+![Error vs num examples](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/error_vs_num_examples.jpg "Accuracy vs num examples")
 
-[accuracy_vs_num_passes]: 
+
 
 
 ###Usage and output example
