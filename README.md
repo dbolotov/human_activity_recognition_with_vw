@@ -97,7 +97,7 @@ confusion matrix:
 ![Loss vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/loss_vs_num_passes.jpg "Loss vs num passes")  ![Error vs num examples](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/error_vs_num_examples.jpg "Accuracy vs num examples")
 
 
-The left figure shows average training loss output from VW when using L-BFGS optimization and a logistic loss function. Test error was not decreasing significantly after the 30-passes mark. The learning curves plot (right figure) was made by training on an increasing number of observations (using 30 passes) and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value, which means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
+This section describes some observations and results when playing with VW. The left figure shows average training loss output from VW when using L-BFGS optimization and a logistic loss function. Test error was not decreasing significantly after the 30-passes mark. The learning curves plot (right figure) was made by training on an increasing number of observations (using 30 passes) and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value, which means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
 
 As in the original paper, the features'sitting down' and 'standing up' have the highest errors and the smallest amount of observations. More data for these activities would likely increase overall accuracy. 
 
