@@ -10,13 +10,13 @@
 
 ###Data
 
-The dataset is taken from [Wearable Computing: Accelerometers' Data Classification of Body Postures and Movements](http://archive.ics.uci.edu/ml/datasets/Wearable+Computing%3A+Classification+of+Body+Postures+and+Movements+%28PUC-Rio%29). It consists of 165633 observations. Each observation contains one of 5 types of activities, performed by human subjects: sitting down, standing up, standing, walking, and sitting. Information about the user and readings from 4 accelerometers are used as features in the learning algorithm.
+The benchmark dataset is taken from [Wearable Computing: Accelerometers' Data Classification of Body Postures and Movements](http://archive.ics.uci.edu/ml/datasets/Wearable+Computing%3A+Classification+of+Body+Postures+and+Movements+%28PUC-Rio%29). Each of the 165633 observation contains one of 5 types of activities, performed by human subjects: sitting down, standing up, standing, walking, and sitting. Information about the user and readings from 4 accelerometers are used as features in the learning algorithm.
 
 See links for detailed description.
 
 ###Approach
 
-This is a multi-class classification problem. The approach consists of these steps:
+This is a multi-class classification problem with categorical and continuous features. The approach consists of the following steps:
 
 1. 'Look' at the data. Check the types of values, ranges, etc., and if there are any quality issues.
 
@@ -27,10 +27,9 @@ This is a multi-class classification problem. The approach consists of these ste
 4. Change algorithm, parameters, etc. based on performance.
 
 
-This study uses Vowpal Wabbit to build the prediction model. VW produces good results fast.   
+This study uses Vowpal Wabbit to build the prediction model. Vowpal Wabbit is fast, simple to set up and use, and makes you chuckle when its name is said out loud.   
 
-Modules from the scikit-learn python library are used to evaluate performance. The training, testing and evaluation steps are performed from a python script. All code was run on linux. 
-
+Modules from the scikit-learn python library are used to evaluate performance. The training, testing and evaluation steps are performed via a python script. All code is run on linux. 
 
 
 
@@ -57,38 +56,26 @@ VW allows inclusion of quadratic and cubic feature interactions. For the namespa
 
 Data was split into training and test sets, and the model was built using the training data. Performance was evaluated using classification accuracy and confusion matrices. Using both training and test sets allows to get a sense of bias/variance and how well the algorithm generalizes.
 
-The following plots were made using an 80/20 training/test split, omitting 'user' and 'gender' features, and using the following vw command pattern: `vw -d <input> -f <output> -c --oaa 5 --bfgs --loss_function logistic --passes <n>`.
-The learning curves (accuracy vs num examples plot) were made by training on an increasing number of observations and computing test error on the same test set.
+The following plots were made using an 80/20 training/test split, using all but 'user' and 'gender' features, with the following vw command pattern: `vw -d <input> -f <output> -c --oaa 5 --bfgs --loss_function logistic --passes <n>`.
+The learning curves (accuracy vs num examples plot) were made by training on an increasing number of observations and computing test error on the same held out test set.
 
 - average loss plot
 - accuracy vs training examples plot
 - accuracy vs passes plot
 
 
-
-
-###Findings
-
-- It is possible to achieve a test accuracy of about 0.96 using the following specification: `vw -d <input> -f <output> -c --oaa 5 --bfgs --loss_function logistic --passes 30` 
-- 'sitting down' and 'standing up' have the lowest scores and the smallest amount of observations. More data for these activities is likely to help.
-- using vw's `--bfgs` increases accuracy by .03.
-- random sort of observations increases accuracy by 0.001.
-
-
-###Further improvement
-
-- Use k-fold cross-validation to get a better sense of errors.
-- Add importance weights to sittingdown and standingup to see how accuracy is affected.
-
-
 ###Usage and output example
 ```bash
-#commands:
-python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw vw #convert data to vw format
-sort -R sort -R ../data/working/dataset.vw > ../data/working/dataset_rand.vw #randomize rows in dataset
-python vw_main_train.py #split data into training and test set, build model, evaluate on test set
+## commands:
 
-#output:
+#convert data to vw format
+python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw vw 
+#randomize rows in dataset
+sort -R sort -R ../data/working/dataset.vw > ../data/working/dataset_rand.vw 
+#split data into training and test set, build model, evaluate on test set
+python vw_main_train.py 
+
+## output:
 Executing: vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k --oaa 5 --bfgs --loss_function logistic --passes 30 --quiet
 
 Evaluate on training set:
@@ -112,9 +99,28 @@ confusion matrix:
 
 
 
+###Findings
+
+- It is possible to achieve a test accuracy of about 0.96 using the following specification: `vw -d <input> -f <output> -c --oaa 5 --bfgs --loss_function logistic --passes 30` 
+- 'sitting down' and 'standing up' have the lowest F1 scores and the smallest amount of observations. More data for these activities is likely to help.
+- using vw's `--bfgs` increases accuracy by .03.
+- random sorting of observations increases accuracy by 0.001.
+
+
+###Further tasks
+
+- Use k-fold cross-validation to get a better sense of errors.
+- Add importance weights to sittingdown and standingup to see how accuracy is affected. Can be done with something like `sed -e 's/<class1> /<class1> <weight1>  /g' -e 's/<class2>  /<class2> <weight2>  /g' <inputfile> > <outputfile>`
+- Try nonlinear options in vw
+- Try adjusting rank of inverse hessian approximation for bfgs option in vw
+- Omit all body-related features from the dataset (gender, age, height, weight, BMI)
+
+
+
+
 ###Links
 - [Original data source and publication](http://groupware.les.inf.puc-rio.br/har)
-- [Detailed data description](http://archive.ics.uci.edu/ml/datasets/Wearable+Computing%3A+Classification+of+Body+Postures+and+Movements+%28PUC-Rio%29)
+- [Detailed data description at UC Irvine database](http://archive.ics.uci.edu/ml/datasets/Wearable+Computing%3A+Classification+of+Body+Postures+and+Movements+%28PUC-Rio%29)
 - [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki)
 - [Scikit-learn](http://scikit-learn.org/stable/)
 - [Original source for split.py and raw_to_format.py](https://github.com/zygmuntz/phraug)
@@ -126,8 +132,9 @@ confusion matrix:
 ####TODO
 - [x] build classification report with scikits http://scikit-learn.org/dev/modules/generated/sklearn.metrics.classification_report.html#sklearn.metrics.classification_report
 - [x] use importance weighting for highly misclassified samples
-- [x] use cost for misclassified classes
+- [x] use cost for misclassified classes - this did not work, probably implemented wrong
 - [x] vw - write python script to convert .csv to .vw format
+- [ ] read original paper for the dataset
 - [ ] compare to benchmark in original study
 - [ ] create plots of performance metrics, etc 
 - [ ] look at data and create histogram of class distribution (use Excel)
