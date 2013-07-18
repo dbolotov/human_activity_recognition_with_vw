@@ -4,13 +4,13 @@
 ###Description
 
 * This is a descriptive study on classifying human activities using data from wearable accelerometers.
-* The project uses Vowpal Wabbit, python, and some linux command line utilities.
+* The project uses Vowpal Wabbit, python, and linux command line utilities.
 * Code and some detail for data processing, learning, and performance evaluation is included.
 
 
 ###Data
 
-The benchmark dataset is from research on human activity recognition, described [here](http://groupware.les.inf.puc-rio.br/har). Each of the 165633 observations contains one of 5 types of activities, performed by human subjects: sitting down, standing up, standing, walking, and sitting. Information about the user, and readings from 4 accelerometers worn by each subject, are available for each observation. The process of extracting 12 features from from accelerometer readings is described in the [original paper](http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201).
+The benchmark dataset is from research on human activity recognition, described [here](http://groupware.les.inf.puc-rio.br/har). Each of the 165633 observations contains one of 5 types of activities, performed by human subjects: sitting down, standing up, standing, walking, and sitting. Information about the user, and readings from 4 accelerometers worn by each subject, are available for each observation. Only the accelerometer features are used in building the model here. The process of extracting 12 features from from accelerometer readings is described in the [original paper](http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201).
 
 
 ###Approach
@@ -31,9 +31,9 @@ This study uses Vowpal Wabbit to build the prediction model, because is fast, fu
 
 ###Data pre-processing
 
-A timestamp was removed from row 122078 in the original .csv file.
+A timestamp was removed from row 122078 in the original .csv file. It was also noted that the data contains 1352 duplicate rows; these were not removed.
 
-Data was converted to vw format and only accelerometer features were retained. This included mapping class names to integer values. The original dataset has observations sorted by class; the vw-formatted dataset was randomized at this point.
+Data was converted to vw format, which included mapping class names to integer values. Only accelerometer features were retained.The original dataset has observations sorted by class; the vw-formatted dataset was randomized at this point.
 
 The header and one observation in original format looks like this:
 ```
@@ -50,8 +50,10 @@ The same observation in vw format (only accelerometer features retained):
 
 Data was split into training and training sets, and the model was built using the training data. Performance was evaluated using classification accuracy and confusion matrices. Tracking both training and test errors allows to get a sense of bias/variance and how well the algorithm generalizes.
 
-The model was built using the 70/30 training/test split, using all accelerometer features with the following vw command pattern: `vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes <n>`.
-The learning curves (error vs num examples) plot was made by training on an increasing number of observations and computing test error on the same test set of 49928 examples.
+The model was built using the 70/30 training/test split, using all accelerometer features with the following vw command pattern: 
+`vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes <n>`.
+
+The learning curves plot (right figure) was made by training on an increasing number of observations and computing test error on the same test set of 49928 examples.
 
 ![Loss vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/loss_vs_num_passes.jpg "Loss vs num passes") ![Error vs num examples](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/error_vs_num_examples.jpg "Accuracy vs num examples")
 
@@ -72,9 +74,7 @@ Random sorting of observations increases accuracy by 0.001.
 python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw vw 
 #randomize rows in dataset
 sort -R sort -R ../data/working/dataset.vw > ../data/working/dataset_rand.vw
-#separate 20% of data out to use for final performance evaluation
-
-#split remaining data into training and cv set, learn, and evaluate
+#split remaining data into training and test set, learn, and evaluate
 python vw_main_train.py 
 
 ## output:
