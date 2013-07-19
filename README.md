@@ -97,12 +97,14 @@ confusion matrix:
 ![Loss vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/loss_vs_num_passes.jpg "Loss vs num passes")  ![Error vs num examples](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/error_vs_num_examples.jpg "Accuracy vs num examples")
 
 
-This section describes some observations and results of learning with VW. The left figure shows average training loss output from VW when using L-BFGS optimization and a logistic loss function. Test error was not decreasing significantly after the 30-passes mark. The learning curves plot (right figure) was made by training on an increasing number of observations (using 30 passes) and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value, which means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
+This section describes some observations and results of learning with VW. The left figure shows average training loss output from VW when using L-BFGS optimization and a logistic loss function; test error was not decreasing significantly after the 30-passes mark. The learning curves plot (right figure) was made by training on an increasing number of observations (using 30 passes) and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value, which means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
 
 As in the original paper, the features'sitting down' and 'standing up' have the highest errors and the smallest amount of observations. More data for these activities would likely increase overall accuracy. 
 
 It is possible to achieve a test accuracy of about 0.95 using the following specification: 
 `vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes 30`. 
+
+Accuracy increases if bit precision is raised from the default `-b 18` to reduce hash collisions (explained [here](https://github.com/JohnLangford/vowpal_wabbit/wiki/Weight-vector)). Concretely, using `-b 24` improves accuracy by 0.004.
 
 In a more thorough approach, some percentage of the data would be held out from training/testing and only used to report a final error. Using k-fold cross-validation could also give a better sense of errors during training.
 
@@ -113,10 +115,10 @@ In a more thorough approach, some percentage of the data would be held out from 
 - Try nonlinear options in VW.
 - Try adjusting rank of inverse hessian approximation for bfgs option in VW.
 - Separate data into 60/20/20 train/cross-validation/test split, and use cv set for tuning.
-- Compare sum of cardinality of all features to number of bits: https://github.com/JohnLangford/vowpal_wabbit/wiki/Weight-vector
 
 
 ###Resources
+
 - [Original data source and publication](http://groupware.les.inf.puc-rio.br/har)
 - [Detailed data description at UC Irvine database](http://archive.ics.uci.edu/ml/datasets/Wearable+Computing%3A+Classification+of+Body+Postures+and+Movements+%28PUC-Rio%29)
 - [Original source for split.py and raw_to_format.py](https://github.com/zygmuntz/phraug)
