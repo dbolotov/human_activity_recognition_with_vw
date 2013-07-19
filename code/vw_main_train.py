@@ -16,7 +16,7 @@ import split,vw_evaluation
 split.main('../data/working/dataset_rand.vw','../data/working/train.vw','../data/working/test.vw', 0.7, 'randy')
 
 ## Train vw model using train set (run as system cmd from python), save into file
-model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k --oaa 5 --bfgs --loss_function logistic --passes 30"
+model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k -b 24 --oaa 5 --bfgs --loss_function logistic --passes 30"
 # model_cmd = "vw -d ../data/working/train.vw -f ../data/output/vw.model -c -k --oaa 5 --bfgs --loss_function logistic --passes "+str(num)+" --quiet"
 
 print 'Executing:', model_cmd

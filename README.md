@@ -113,6 +113,7 @@ In a more thorough approach, some percentage of the data would be held out from 
 - Try nonlinear options in VW.
 - Try adjusting rank of inverse hessian approximation for bfgs option in VW.
 - Separate data into 60/20/20 train/cross-validation/test split, and use cv set for tuning.
+- Compare sum of cardinality of all features to number of bits: https://github.com/JohnLangford/vowpal_wabbit/wiki/Weight-vector
 
 
 ###Resources
