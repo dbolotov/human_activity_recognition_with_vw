@@ -104,7 +104,7 @@ As in the original paper, the features'sitting down' and 'standing up' have the 
 It is possible to achieve a test accuracy of about 0.95 using the following specification: 
 `vw -d <input> -f <output> -c -k --oaa 5 --bfgs --loss_function logistic --passes 30`. 
 
-Accuracy increases if bit precision is raised from the default `-b 18` to reduce hash collisions (explained [here](https://github.com/JohnLangford/vowpal_wabbit/wiki/Weight-vector)). Concretely, using `-b 24` improves accuracy by 0.004.
+Accuracy increases if number of bits in the feature table is raised from default `-b 18` to reduce hash collisions (explained [here](https://github.com/JohnLangford/vowpal_wabbit/wiki/Weight-vector)). Concretely, using `-b 24` improves accuracy by 0.004.
 
 In a more thorough approach, some percentage of the data would be held out from training/testing and only used to report a final error. Using k-fold cross-validation could also give a better sense of errors during training.
 
