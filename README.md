@@ -26,7 +26,7 @@ This is a multi-class classification problem with continuous features. The appro
 4. Change algorithm, parameters, etc. based on performance.
 
 
-This study uses Vowpal Wabbit to build the prediction model, because is fast, fun to use, and fun to pronounce. Modules from the scikit-learn python library are used to evaluate performance. The training, testing and evaluation steps are performed via a python script. All code is run on linux. 
+This study uses [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit) to build predictive models, because is fast, fun to use, and fun to pronounce. Modules from the [scikit-learn](http://scikit-learn.org/stable/) python library are used to evaluate performance. The training, testing and evaluation steps are performed via a python script. All code is run on linux. 
 
 
 ###Data pre-processing
@@ -120,10 +120,3 @@ In a more thorough approach, some percentage of the data would be held out from 
 - [Original data source and publication](http://groupware.les.inf.puc-rio.br/har)
 - [Detailed data description at UC Irvine database](http://archive.ics.uci.edu/ml/datasets/Wearable+Computing%3A+Classification+of+Body+Postures+and+Movements+%28PUC-Rio%29)
 - [Original source for split.py and raw_to_format.py](https://github.com/zygmuntz/phraug)
-- [Machine learning experiment organization](http://arkitus.com/PRML/)
-
-
-###Software used
-- [Vowpal Wabbit 7.3.0](https://github.com/JohnLangford/vowpal_wabbit)
-- [Python 2.7](http://www.python.org/download/releases/2.7/)
-- [scikits-learn 0.13.1](http://scikit-learn.org/stable/)
