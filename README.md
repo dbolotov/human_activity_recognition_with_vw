@@ -45,7 +45,7 @@ The same observation in vw format (only accelerometer features retained):
 1  |f1 -3 |f2 92 |f3 -63 |f4 -23 |f5 18 |f6 -19 |f7 5 |f8 104 |f9 -92 |f10 -150 |f11 -103 |f12 -147
 ```
 
-The `f-1`...`f-2` namespace strings can be used to specify non-linear interactions in VW commands. E.g., quadratic interactions between all features here can be passed in with `-q ff`.
+The `f1`...`f12` namespace strings can be used to specify non-linear interactions in VW commands. E.g., quadratic interactions between all features here can be passed in with `-q ff`.
 
 
 ###Training and testing
@@ -97,7 +97,7 @@ confusion matrix:
 ![Loss vs num passes](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/loss_vs_num_passes.jpg "Loss vs num passes")  ![Error vs num examples](https://bitbucket.org/dbolotov/human_activity_recognition_with_vw/raw/master/images/error_vs_num_examples.jpg "Accuracy vs num examples")
 
 
-This section describes some observations and results of learning with VW. The left figure shows average training loss output from VW when using L-BFGS optimization and a logistic loss function; test error was not decreasing significantly after the 30-passes mark. The learning curves plot (right figure) was made by training on an increasing number of observations (using 30 passes) and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value, which means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
+This section describes some observations and results. The left figure shows average training loss as function of passes (on log10 scale), output from VW when using L-BFGS optimization and a logistic loss function. Test error was not decreasing significantly after the 30-passes mark. The right figure shows learning curves, made by training on an increasing number of observations (using 30 passes) and computing test error on the same test set of 49928 examples. These show that test error decreases and both errors converge to a low value, which means that the algorithm is not suffering from outrageous high-bias or high-variance problems.
 
 As in the original paper, the features'sitting down' and 'standing up' have the highest errors and the smallest amount of observations. More data for these activities would likely increase overall accuracy. 
 
