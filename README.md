@@ -59,7 +59,7 @@ Performance was evaluated on both sets using classification accuracy and confusi
 ###Usage and output example
 
 ```bash
-## commands:
+## commands (run from /code folder):
 
 #convert data to vw format
 python raw_to_format.py ../data/input/dataset.csv ../data/working/dataset.vw 
